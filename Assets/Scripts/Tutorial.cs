@@ -35,7 +35,7 @@ public class Tutorial : MonoBehaviour
 
     void Start()
     {
-        string url = "https://smite-back-end.herokuapp.com";
+        string url = "https://mykin-server.com";
         string serverAddress = "GAFWSBEOGCCYVEC5YZUILDEDGHO27PODVTQJ45DSFBODKRXQ42MVLIZZ";
         kinWrapper = GameObject.Find("KinWrapper").GetComponent<KinWrapper>();
         kinWrapper.Initialize(ListenKin, url, serverAddress);

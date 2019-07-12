@@ -26,7 +26,7 @@ public class Tutorial : MonoBehaviour
     void ListenKin(object eventData, string type)
     {
         if(type == "balance"){
-            textBalance.text = PlayerPrefs.GetFloat("KinBalanceUser", 0).ToString();
+            textBalance.text = kinWrapper.Balance().ToString();
         }
 
         GameObject.Find("TutorialLog").GetComponent<Text>().text +=  "\n" +

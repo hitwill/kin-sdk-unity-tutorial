@@ -281,26 +281,24 @@ public class KinWrapper : MonoBehaviour, IPaymentListener, IBalanceListener
 
     IEnumerator WhitelistTransaction(Transaction transaction, Action<string, string> onComplete)
     {
-        //Contact your server to request whitelisting of the transaction.
-        //This must be done for reach transaction before sending it without fees
-        //Your server will verify this transaction with Kin Foundation, and return a whitelisted (authorized) transaction string
-        //You can then use this string to finally send the transaction
-        if (verbose) listenerCallback?.Invoke("Requesting whitelist", "log");
         var postDataObj = new WhitelistPostData(transaction);
-        var postData = JsonUtility.ToJson(postDataObj);
-        var rawPostData = Encoding.UTF8.GetBytes(postData);
+       
 
-        // UnityWebRequest does not work correclty when posting a JSON string so we use a byte[] and a hacky workaround
-        var req = UnityWebRequest.Post(baseURL + whitelistURL, "POST");
-        req.SetRequestHeader("Content-Type", "application/json");
-        req.uploadHandler = new UploadHandlerRaw(rawPostData);
+        string reqUrl = baseURL + whitelistURL;
 
+        WWWForm form = new WWWForm();
+        form.AddField("envelope", postDataObj.envelope);
+        form.AddField("networkId", postDataObj.network_id);
+        form.AddField("network_id", postDataObj.network_id); //for forward compatibility
+
+
+        var req = UnityWebRequest.Post(reqUrl, form);
         yield return req.SendWebRequest();
 
         if (req.isNetworkError || req.isHttpError)
         {
             LogError(req.error);
-            onComplete(null, null);
+            onComplete?.Invoke(null, null);
         }
         else
         {

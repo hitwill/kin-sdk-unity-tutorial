@@ -13,7 +13,7 @@ public class Tutorial : MonoBehaviour
 
    public void SendKin(){
        //send Kin to server
-       string memo = "tutorial Earn";
+       string memo = "tutorial Spend";
        kinWrapper.SendKin(5m, memo);
     }
 

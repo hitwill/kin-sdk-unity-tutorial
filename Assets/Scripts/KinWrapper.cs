@@ -485,12 +485,14 @@ public class KinWrapper : MonoBehaviour, IPaymentListener, IBalanceListener
     class WhitelistPostData
     {
         public string envelope;
-        public string network_id;
+        public string network_id;  //for forward compatibility
+        public string networkId;
 
         public WhitelistPostData(Transaction transaction)
         {
             envelope = transaction.WhitelistableTransactionPayLoad;
             network_id = transaction.WhitelistableTransactionNetworkPassphrase;
+            networkId = transaction.WhitelistableTransactionNetworkPassphrase;
         }
     }
 
